@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', 'Noto Sans', sans-serif;
+  }
+  
+  body {
+    background-color: #f9fafb;
+    color: #101418;
+  }
+  
+  .dark body {
+    background-color: #101a23;
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#325f99] text-gray-50 hover:bg-[#2a4d80] px-4 py-2 rounded-xl font-bold text-sm tracking-[0.015em] transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-[#eaedf1] text-[#101418] hover:bg-[#d4dae2] px-4 py-2 rounded-xl font-bold text-sm tracking-[0.015em] transition-colors;
+  }
+  
+  .dark .btn-primary {
+    @apply bg-[#0b80ee] text-white hover:bg-[#0969c7];
+  }
+  
+  .dark .btn-secondary {
+    @apply bg-[#223649] text-white hover:bg-[#2c4762];
+  }
+  
+  .card {
+    @apply bg-white border border-[#d4dae2] rounded-xl p-4;
+  }
+  
+  .dark .card {
+    @apply bg-[#182734] border-[#314d68];
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-[#d4dae2] bg-gray-50 text-[#101418] placeholder:text-[#5c708a] focus:outline-none focus:ring-0 focus:border-[#325f99];
+  }
+  
+  .dark .input-field {
+    @apply border-[#314d68] bg-[#182734] text-white placeholder:text-[#90aecb] focus:border-[#0b80ee];
+  }
+}

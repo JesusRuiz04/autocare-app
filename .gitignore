@@ -1,0 +1,31 @@
+node_modules
+# Keep environment variables out of version control
+.env
+.env*.local
+
+# Next.js
+/.next/
+/out/
+
+# Build outputs  
+/build
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+prisma/dev.db
+
+# IDE
+.vscode/
+.idea/
+
+# Vercel
+.vercel
+
+# Generated files
+/src/generated/prisma
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
