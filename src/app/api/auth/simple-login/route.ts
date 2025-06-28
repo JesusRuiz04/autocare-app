@@ -47,22 +47,15 @@ export async function POST(request: NextRequest) {
       { expiresIn: '7d' }
     )
 
-    // Crear respuesta con cookie
+    // Crear respuesta con token
     const response = NextResponse.json({
       message: 'Login exitoso',
+      token: token,
       user: {
         id: user.id,
         email: user.email,
         name: user.name
       }
-    })
-
-    // Configurar cookie segura
-    response.cookies.set('auth-token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7 // 7 días
     })
 
     return response

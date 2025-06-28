@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/lib/auth"
+import { verifyAuth } from "@/lib/auth-helpers"
 import { prisma } from "@/lib/prisma"
 
 export async function PUT(
@@ -9,9 +8,9 @@ export async function PUT(
 ) {
   try {
     const params = await context.params
-    const session = await getServerSession(authOptions)
+    const user = await verifyAuth(request)
     
-    if (!session?.user) {
+    if (!user) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
     }
 
@@ -22,7 +21,7 @@ export async function PUT(
     const existingExpense = await prisma.expense.findFirst({
       where: {
         id: params.id,
-        userId: (session.user as any).id
+        userId: user.userId
       }
     })
 
@@ -63,9 +62,9 @@ export async function DELETE(
 ) {
   try {
     const params = await context.params
-    const session = await getServerSession(authOptions)
+    const user = await verifyAuth(request)
     
-    if (!session?.user) {
+    if (!user) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
     }
 
@@ -73,7 +72,7 @@ export async function DELETE(
     const existingExpense = await prisma.expense.findFirst({
       where: {
         id: params.id,
-        userId: (session.user as any).id
+        userId: user.userId
       }
     })
 

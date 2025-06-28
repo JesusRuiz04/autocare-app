@@ -1,18 +1,17 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/lib/auth"
+import { verifyAuth } from "@/lib/auth-helpers"
 import { prisma } from "@/lib/prisma"
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
+    const user = await verifyAuth(request)
     
-    if (!session?.user) {
+    if (!user) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
     }
 
     const vehicles = await prisma.vehicle.findMany({
-      where: { userId: (session.user as any).id },
+      where: { userId: user.userId },
       orderBy: { createdAt: 'desc' }
     })
 
@@ -28,9 +27,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
+    const user = await verifyAuth(request)
     
-    if (!session?.user) {
+    if (!user) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
     }
 
@@ -54,7 +53,7 @@ export async function POST(request: NextRequest) {
         vin,
         mileage: mileage ? parseInt(mileage) : null,
         fuelType,
-        userId: (session.user as any).id
+        userId: user.userId
       }
     })
 
