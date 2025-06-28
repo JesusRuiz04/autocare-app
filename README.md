@@ -1,4 +1,4 @@
-# Auto Manager - Gestión de Mantenimiento de Vehículos
+# AutoCare - Gestión de Mantenimiento de Vehículos
 
 Una aplicación web moderna y completa para gestionar el mantenimiento, gastos, seguros y más aspectos de tus vehículos.
 
@@ -11,42 +11,77 @@ Una aplicación web moderna y completa para gestionar el mantenimiento, gastos, 
 - **Comunidad**: Conecta con otros propietarios de vehículos
 - **Recordatorios Automáticos**: Nunca olvides una cita de mantenimiento importante
 - **Diseño Responsive**: Funciona perfectamente en dispositivos móviles y desktop
-- **Modo Oscuro**: Cambia entre tema claro y oscuro según tus preferencias
+- **Autenticación Segura**: Sistema completo de registro y login
 
 ## 🛠 Tecnologías Utilizadas
 
-- **Frontend**: Next.js 14 con App Router
+- **Frontend**: Next.js 15 con App Router
 - **Lenguaje**: TypeScript
 - **Estilos**: Tailwind CSS
 - **Autenticación**: NextAuth.js
-- **Base de Datos**: Prisma + PostgreSQL
-- **Validación**: Zod
+- **Base de Datos**: Prisma + PostgreSQL (Supabase)
+- **Despliegue**: Vercel
 - **Iconos**: Heroicons
 - **Fecha/Hora**: date-fns
 
-## 🚀 Inicio Rápido
+## 🌐 Demo en Vivo
 
-### Prerrequisitos
+La aplicación está desplegada en: **[Por configurar en Vercel]**
+
+### Credenciales de Demo
+- **Email**: demo@autocare.com
+- **Contraseña**: demo123
+
+## 🚀 Despliegue en Producción
+
+### 1. Configurar Supabase (Base de Datos)
+
+1. Ve a [supabase.com](https://supabase.com) y crea una cuenta
+2. Crea un nuevo proyecto
+3. Ve a Settings > Database
+4. Copia las cadenas de conexión:
+   - `Database URL` (para DATABASE_URL)
+   - `Connection Pooling URL` (para DIRECT_URL)
+
+### 2. Desplegar en Vercel
+
+1. Ve a [vercel.com](https://vercel.com) y conecta tu cuenta de GitHub
+2. Importa este repositorio: `https://github.com/JesusRuiz04/autocare-app.git`
+3. Configura las siguientes variables de entorno:
+
+```bash
+DATABASE_URL="postgresql://postgres:TU_PASSWORD@db.TU_PROJECT.supabase.co:5432/postgres"
+DIRECT_URL="postgresql://postgres.TU_PROJECT:TU_PASSWORD@aws-0-us-east-2.pooler.supabase.com:6543/postgres"
+NEXTAUTH_URL="https://tu-app.vercel.app"
+NEXTAUTH_SECRET="d8f7a9b2c4e6f8a1b3d5e7f9a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e4f6a8b0"
+JWT_SECRET="a1b2c3d4e5f6789abc123def456ghi789jkl012mno345pqr678stu901vwx234yz"
+```
+
+4. Haz clic en "Deploy"
+5. Una vez desplegado, ve al dashboard de Vercel > Functions
+6. Ejecuta las migraciones y seed:
+   - Comando 1: `npx prisma migrate deploy`
+   - Comando 2: `npx prisma db seed`
+
+## 🔧 Desarrollo Local
+
+### Prerrequisitos para Desarrollo Local
 
 - Node.js 18+ 
 - npm, yarn o pnpm
-- PostgreSQL (opcional para desarrollo local)
+- PostgreSQL (opcional - también funciona con SQLite)
 
-### Instalación
+### Configuración Local
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/tu-usuario/auto-manager.git
-cd auto-manager
+git clone https://github.com/JesusRuiz04/autocare-app.git
+cd autocare-app
 ```
 
 2. Instala las dependencias:
 ```bash
 npm install
-# o
-yarn install
-# o
-pnpm install
 ```
 
 3. Configura las variables de entorno:
@@ -56,9 +91,12 @@ cp .env.example .env.local
 
 Edita `.env.local` con tus configuraciones:
 ```env
-NEXTAUTH_SECRET=tu-secreto-super-seguro
-NEXTAUTH_URL=http://localhost:3000
-DATABASE_URL=postgresql://usuario:contraseña@localhost:5432/automanager
+# Para desarrollo local con SQLite
+DATABASE_URL="file:./dev.db"
+DIRECT_URL="file:./dev.db"
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="tu-secreto-super-seguro-para-desarrollo"
+JWT_SECRET="tu-jwt-secret-para-desarrollo"
 ```
 
 4. Ejecuta las migraciones de la base de datos:
@@ -66,22 +104,23 @@ DATABASE_URL=postgresql://usuario:contraseña@localhost:5432/automanager
 npx prisma migrate dev
 ```
 
-5. Inicia el servidor de desarrollo:
+5. Puebla la base de datos con datos de ejemplo:
 ```bash
-npm run dev
-# o
-yarn dev
-# o
-pnpm dev
+npx prisma db seed
 ```
 
-6. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+6. Inicia el servidor de desarrollo:
+```bash
+npm run dev
+```
+
+7. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
 ## 🎯 Cuenta Demo
 
-Para probar la aplicación sin registrarte, utiliza estas credenciales:
+Para probar la aplicación, utiliza estas credenciales:
 
-- **Email**: demo@auto.com
+- **Email**: demo@autocare.com
 - **Contraseña**: demo123
 
 ## 📱 Páginas Principales
