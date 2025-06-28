@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useAuth } from './SessionProvider';
 
 const navigation = [
   {
@@ -65,10 +66,10 @@ const navigation = [
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('user_name');
+    logout();
     router.push('/');
   };
 
